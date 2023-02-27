@@ -259,3 +259,5 @@ int main()
 
 ## Future work
 `values` may come to be removed as `array` seems to have decent enough support for in-line array initialization.
+
+The variable-length array may be reworked to remove pooling as this is a more advanced feature than what is needed for arrays to function. Pooling should instead be implemented by the user.
