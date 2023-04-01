@@ -1,9 +1,15 @@
-#ifndef ARR_H_INCLUDED__
-#define ARR_H_INCLUDED__
+/// @file
+/// @author github.com/SirJonthe
+/// @date 2023
+/// @copyright Public domain.
+/// @license CC0 1.0
+
+#ifndef CC0_ARR_H_INCLUDED__
+#define CC0_ARR_H_INCLUDED__
 
 #include <cstdint>
 
-namespace arr
+namespace cc0
 {
 
 	// TODO: values may not be necessary if array<type,size> can be a substitute.
@@ -440,54 +446,54 @@ namespace arr
 }
 
 template < typename type_t, uint64_t size_u >
-arr::values<type_t,size_u>::operator type_t*( void )
+cc0::values<type_t,size_u>::operator type_t*( void )
 {
 	return v;
 }
 
 template < typename type_t, uint64_t size_u >
-arr::values<type_t,size_u>::operator const type_t*( void ) const
+cc0::values<type_t,size_u>::operator const type_t*( void ) const
 {
 	return v;
 }
 
 template < typename type_t >
-arr::slice<type_t>::slice( void ) : m_values(nullptr), m_size(0)
+cc0::slice<type_t>::slice( void ) : m_values(nullptr), m_size(0)
 {}
 
 template < typename type_t >
 template < typename type2_t >
-arr::slice<type_t>::slice(const arr::slice<type2_t> &arr) : m_values(arr), m_size(arr.size())
+cc0::slice<type_t>::slice(const cc0::slice<type2_t> &arr) : m_values(arr), m_size(arr.size())
 {}
 
 template < typename type_t >
 template < typename type2_t >
-arr::slice<type_t>::slice(const arr::slice<const type2_t> &arr) : m_values(arr), m_size(arr.size())
+cc0::slice<type_t>::slice(const cc0::slice<const type2_t> &arr) : m_values(arr), m_size(arr.size())
 {}
 
 template < typename type_t >
 template < typename type2_t >
-arr::slice<type_t>::slice(type2_t *values, uint64_t size) : m_values(values), m_size(size)
+cc0::slice<type_t>::slice(type2_t *values, uint64_t size) : m_values(values), m_size(size)
 {}
 
 template < typename type_t >
 template < typename type2_t >
-arr::slice<type_t>::slice(const type2_t *values, uint64_t size) : m_values(values), m_size(size)
+cc0::slice<type_t>::slice(const type2_t *values, uint64_t size) : m_values(values), m_size(size)
 {}
 
 template < typename type_t >
 template < typename type2_t, uint64_t size_u >
-arr::slice<type_t>::slice(type2_t (&values)[size_u]) : m_values(values), m_size(size_u)
+cc0::slice<type_t>::slice(type2_t (&values)[size_u]) : m_values(values), m_size(size_u)
 {}
 
 template < typename type_t >
 template < typename type2_t, uint64_t size_u >
-arr::slice<type_t>::slice(const type2_t (&values)[size_u]) : m_values(values), m_size(size_u)
+cc0::slice<type_t>::slice(const type2_t (&values)[size_u]) : m_values(values), m_size(size_u)
 {}
 
 template < typename type_t >
 template < typename type2_t >
-arr::slice<type_t> &arr::slice<type_t>::operator=(const slice<type2_t> &arr)
+cc0::slice<type_t> &cc0::slice<type_t>::operator=(const slice<type2_t> &arr)
 {
 	m_values = arr.m_values;
 	m_size = arr.m_size;
@@ -496,7 +502,7 @@ arr::slice<type_t> &arr::slice<type_t>::operator=(const slice<type2_t> &arr)
 
 template < typename type_t >
 template < typename type2_t >
-arr::slice<type_t> &arr::slice<type_t>::operator=(const slice<const type2_t> &arr)
+cc0::slice<type_t> &cc0::slice<type_t>::operator=(const slice<const type2_t> &arr)
 {
 	m_values = arr.m_values;
 	m_size = arr.m_size;
@@ -505,7 +511,7 @@ arr::slice<type_t> &arr::slice<type_t>::operator=(const slice<const type2_t> &ar
 
 template < typename type_t >
 template < typename type2_t, uint64_t size_u >
-arr::slice<type_t> &arr::slice<type_t>::operator=(type2_t (&values)[size_u])
+cc0::slice<type_t> &cc0::slice<type_t>::operator=(type2_t (&values)[size_u])
 {
 	m_values = values;
 	m_size = size_u;
@@ -514,7 +520,7 @@ arr::slice<type_t> &arr::slice<type_t>::operator=(type2_t (&values)[size_u])
 
 template < typename type_t >
 template < typename type2_t, uint64_t size_u >
-arr::slice<type_t> &arr::slice<type_t>::operator=(const type2_t (&values)[size_u])
+cc0::slice<type_t> &cc0::slice<type_t>::operator=(const type2_t (&values)[size_u])
 {
 	m_values = values;
 	m_size = size_u;
@@ -522,51 +528,51 @@ arr::slice<type_t> &arr::slice<type_t>::operator=(const type2_t (&values)[size_u
 }
 
 template < typename type_t >
-void arr::slice<type_t>::release( void )
+void cc0::slice<type_t>::release( void )
 {
 	m_values = nullptr;
 	m_size = 0;
 }
 
 template < typename type_t >
-arr::slice<type_t>::operator type_t*( void )
+cc0::slice<type_t>::operator type_t*( void )
 {
 	return m_values;
 }
 
 template < typename type_t >
-arr::slice<type_t>::operator const type_t*( void ) const
+cc0::slice<type_t>::operator const type_t*( void ) const
 {
 	return m_values;
 }
 
 template < typename type_t >
-arr::slice<type_t> arr::slice<type_t>::operator()(uint64_t start, uint64_t end)
+cc0::slice<type_t> cc0::slice<type_t>::operator()(uint64_t start, uint64_t end)
 {
 	return slice<type_t>(m_values + start, (end - start));
 }
 
 template < typename type_t >
-arr::slice<const type_t> arr::slice<type_t>::operator()(uint64_t start, uint64_t end) const
+cc0::slice<const type_t> cc0::slice<type_t>::operator()(uint64_t start, uint64_t end) const
 {
 	return slice<const type_t>(m_values + start, (end - start));
 }
 
 template < typename type_t >
-uint64_t arr::slice<type_t>::size( void ) const
+uint64_t cc0::slice<type_t>::size( void ) const
 {
 	return m_size;
 }
 
 template < typename type_t >
 template < typename type2_t >
-arr::slice<type_t>::operator slice<const type2_t>( void ) const {
+cc0::slice<type_t>::operator slice<const type2_t>( void ) const {
 	return slice<const type2_t>(m_values, m_size);
 }
 
 template < typename type_t, uint64_t size_u >
 template < typename type2_t >
-void arr::array<type_t,size_u>::copy(const type2_t *values)
+void cc0::array<type_t,size_u>::copy(const type2_t *values)
 {
 	for (uint64_t i = 0; i < size_u; ++i) {
 		m_values[i] = values[i];
@@ -575,28 +581,28 @@ void arr::array<type_t,size_u>::copy(const type2_t *values)
 
 template < typename type_t, uint64_t size_u >
 template < typename type2_t >
-arr::array<type_t,size_u>::array(const arr::array<type2_t,size_u> &arr)
+cc0::array<type_t,size_u>::array(const cc0::array<type2_t,size_u> &arr)
 {
 	copy<type2_t>(arr);
 }
 
 template < typename type_t, uint64_t size_u >
 template < typename type2_t >
-arr::array<type_t,size_u>::array(const type2_t (&values)[size_u])
+cc0::array<type_t,size_u>::array(const type2_t (&values)[size_u])
 {
 	copy(values);
 }
 
 template < typename type_t, uint64_t size_u >
 template < typename type2_t >
-arr::array<type_t,size_u>::array(const arr::values<type2_t,size_u> &vals)
+cc0::array<type_t,size_u>::array(const cc0::values<type2_t,size_u> &vals)
 {
 	copy(vals.v);
 }
 
 template < typename type_t, uint64_t size_u >
 template < typename type2_t >
-arr::array<type_t,size_u> &arr::array<type_t,size_u>::operator=(const arr::array<type2_t,size_u> &arr)
+cc0::array<type_t,size_u> &cc0::array<type_t,size_u>::operator=(const cc0::array<type2_t,size_u> &arr)
 {
 	copy<type2_t>(arr);
 	return *this;
@@ -604,7 +610,7 @@ arr::array<type_t,size_u> &arr::array<type_t,size_u>::operator=(const arr::array
 
 template < typename type_t, uint64_t size_u >
 template < typename type2_t >
-arr::array<type_t,size_u> &arr::array<type_t,size_u>::operator=(const arr::values<type2_t,size_u> &vals)
+cc0::array<type_t,size_u> &cc0::array<type_t,size_u>::operator=(const cc0::values<type2_t,size_u> &vals)
 {
 	copy(vals.v);
 	return *this;
@@ -612,59 +618,59 @@ arr::array<type_t,size_u> &arr::array<type_t,size_u>::operator=(const arr::value
 
 template < typename type_t, uint64_t size_u >
 template < typename type2_t >
-arr::array<type_t,size_u> &arr::array<type_t,size_u>::operator=(const type2_t (&values)[size_u])
+cc0::array<type_t,size_u> &cc0::array<type_t,size_u>::operator=(const type2_t (&values)[size_u])
 {
 	copy(values);
 	return *this;
 }
 
 template < typename type_t, uint64_t size_u >
-arr::array<type_t,size_u>::operator type_t*( void )
+cc0::array<type_t,size_u>::operator type_t*( void )
 {
 	return m_values;
 }
 
 template < typename type_t, uint64_t size_u >
-arr::array<type_t,size_u>::operator const type_t*( void ) const
+cc0::array<type_t,size_u>::operator const type_t*( void ) const
 {
 	return m_values;
 }
 
 template < typename type_t, uint64_t size_u >
 template < typename type2_t >
-arr::array<type_t,size_u>::operator arr::slice<type2_t>( void )
+cc0::array<type_t,size_u>::operator cc0::slice<type2_t>( void )
 {
-	return arr::slice<type2_t>(m_values);
+	return cc0::slice<type2_t>(m_values);
 }
 
 template < typename type_t, uint64_t size_u >
 template < typename type2_t >
-arr::array<type_t,size_u>::operator const arr::slice<const type2_t>( void ) const
+cc0::array<type_t,size_u>::operator const cc0::slice<const type2_t>( void ) const
 {
-	return arr::slice<const type2_t>(m_values);
+	return cc0::slice<const type2_t>(m_values);
 }
 
 template < typename type_t, uint64_t size_u >
-arr::slice<type_t> arr::array<type_t,size_u>::operator()(uint64_t start, uint64_t end)
+cc0::slice<type_t> cc0::array<type_t,size_u>::operator()(uint64_t start, uint64_t end)
 {
 	return slice<type_t>(m_values + start, (end - start));
 }
 
 template < typename type_t, uint64_t size_u >
-arr::slice<const type_t> arr::array<type_t,size_u>::operator()(uint64_t start, uint64_t end) const
+cc0::slice<const type_t> cc0::array<type_t,size_u>::operator()(uint64_t start, uint64_t end) const
 {
 	return slice<const type_t>(m_values + start, (end - start));
 }
 
 template < typename type_t, uint64_t size_u >
-uint64_t arr::array<type_t,size_u>::size( void ) const
+uint64_t cc0::array<type_t,size_u>::size( void ) const
 {
 	return size_u;
 }
 
 template < typename type_t >
 template < typename type2_t >
-void arr::array<type_t>::copy(const type2_t *values, uint64_t size, bool use_pool)
+void cc0::array<type_t>::copy(const type2_t *values, uint64_t size, bool use_pool)
 {
 	create(size, use_pool);
 	for (uint64_t i = 0; i < m_size; ++i) {
@@ -673,19 +679,19 @@ void arr::array<type_t>::copy(const type2_t *values, uint64_t size, bool use_poo
 }
 
 template < typename type_t >
-arr::array<type_t>::array( void ) : m_values(nullptr), m_size(0), m_capacity(0)
+cc0::array<type_t>::array( void ) : m_values(nullptr), m_size(0), m_capacity(0)
 {}
 
 template < typename type_t >
 template < typename type2_t, uint64_t size_u >
-arr::array<type_t>::array(const type2_t (&values)[size_u]) : array()
+cc0::array<type_t>::array(const type2_t (&values)[size_u]) : array()
 {
 	copy<type2_t>(values, size_u, false);
 }
 
 template < typename type_t >
 template < typename type2_t >
-arr::array<type_t>::array(array<type2_t> &&arr) : m_values(arr), m_size(arr.m_size), m_capacity(arr.m_capacity)
+cc0::array<type_t>::array(array<type2_t> &&arr) : m_values(arr), m_size(arr.m_size), m_capacity(arr.m_capacity)
 {
 	arr.m_values = nullptr;
 	arr.m_size = 0;
@@ -693,62 +699,62 @@ arr::array<type_t>::array(array<type2_t> &&arr) : m_values(arr), m_size(arr.m_si
 }
 
 template < typename type_t >
-arr::array<type_t>::array(uint64_t size) : array()
+cc0::array<type_t>::array(uint64_t size) : array()
 {
 	create(size, false);
 }
 
 template < typename type_t >
 template < typename type2_t >
-arr::array<type_t>::array(const arr::array<type2_t> &arr) : array()
+cc0::array<type_t>::array(const cc0::array<type2_t> &arr) : array()
 {
 	copy<type2_t>(arr, arr.size(), true);
 }
 
 template < typename type_t >
 template < typename type2_t, uint64_t size_u >
-arr::array<type_t>::array(const arr::array<type2_t,size_u> &arr) : array()
+cc0::array<type_t>::array(const cc0::array<type2_t,size_u> &arr) : array()
 {
 	copy<type2_t>(arr, size_u, true);
 }
 
 template < typename type_t >
 template < typename type2_t >
-arr::array<type_t>::array(const arr::slice<type2_t> &arr) : array()
+cc0::array<type_t>::array(const cc0::slice<type2_t> &arr) : array()
 {
 	copy<type2_t>(arr, arr.size(), true);
 }
 
 template < typename type_t >
 template < typename type2_t >
-arr::array<type_t>::array(const arr::slice<const type2_t> &arr) : array()
+cc0::array<type_t>::array(const cc0::slice<const type2_t> &arr) : array()
 {
 	copy<type2_t>(arr, arr.size(), true);
 }
 
 template < typename type_t >
 template < typename type2_t >
-arr::array<type_t>::array(const type2_t *values, uint64_t size) : array()
+cc0::array<type_t>::array(const type2_t *values, uint64_t size) : array()
 {
 	copy(values, size, true);
 }
 
 template < typename type_t >
 template < typename type2_t, uint64_t size_u >
-arr::array<type_t>::array(const arr::values<type2_t,size_u> &vals) : array()
+cc0::array<type_t>::array(const cc0::values<type2_t,size_u> &vals) : array()
 {
 	copy(vals.v, size_u, true);
 }
 
 template < typename type_t >
-arr::array<type_t>::~array( void )
+cc0::array<type_t>::~array( void )
 {
 	delete [] m_values;
 }
 
 template < typename type_t >
 template < typename type2_t >
-arr::array<type_t> &arr::array<type_t>::operator=(const arr::array<type2_t> &arr)
+cc0::array<type_t> &cc0::array<type_t>::operator=(const cc0::array<type2_t> &arr)
 {
 	copy<type2_t>(arr, arr.size(), true);
 	return *this;
@@ -756,7 +762,7 @@ arr::array<type_t> &arr::array<type_t>::operator=(const arr::array<type2_t> &arr
 
 template < typename type_t >
 template < typename type2_t >
-arr::array<type_t> &arr::array<type_t>::operator=(arr::array<type2_t> &&arr)
+cc0::array<type_t> &cc0::array<type_t>::operator=(cc0::array<type2_t> &&arr)
 {
 	if (this != &arr) {
 		destroy(false);
@@ -773,7 +779,7 @@ arr::array<type_t> &arr::array<type_t>::operator=(arr::array<type2_t> &&arr)
 
 template < typename type_t >
 template < typename type2_t, uint64_t size_u >
-arr::array<type_t> &arr::array<type_t>::operator=(const arr::array<type2_t,size_u> &arr)
+cc0::array<type_t> &cc0::array<type_t>::operator=(const cc0::array<type2_t,size_u> &arr)
 {
 	copy<type2_t>(arr, size_u, true);
 	return *this;
@@ -781,7 +787,7 @@ arr::array<type_t> &arr::array<type_t>::operator=(const arr::array<type2_t,size_
 
 template < typename type_t >
 template < typename type2_t >
-arr::array<type_t> &arr::array<type_t>::operator=(const arr::slice<const type2_t> &arr)
+cc0::array<type_t> &cc0::array<type_t>::operator=(const cc0::slice<const type2_t> &arr)
 {
 	copy<type2_t>(arr, arr.size(), true);
 	return *this;
@@ -789,7 +795,7 @@ arr::array<type_t> &arr::array<type_t>::operator=(const arr::slice<const type2_t
 
 template < typename type_t >
 template < typename type2_t, uint64_t size_u >
-arr::array<type_t> &arr::array<type_t>::operator=(const type2_t (&values)[size_u])
+cc0::array<type_t> &cc0::array<type_t>::operator=(const type2_t (&values)[size_u])
 {
 	copy<type2_t>(values, size_u, true);
 	return *this;
@@ -797,14 +803,14 @@ arr::array<type_t> &arr::array<type_t>::operator=(const type2_t (&values)[size_u
 
 template < typename type_t >
 template < typename type2_t, uint64_t size_u >
-arr::array<type_t> &arr::array<type_t>::operator=(const arr::values<type2_t,size_u> &vals)
+cc0::array<type_t> &cc0::array<type_t>::operator=(const cc0::values<type2_t,size_u> &vals)
 {
 	copy(vals.v, size_u, true);
 	return *this;
 }
 
 template < typename type_t >
-void arr::array<type_t>::create(uint64_t size, bool use_pool)
+void cc0::array<type_t>::create(uint64_t size, bool use_pool)
 {
 	if ((size < m_capacity && !use_pool) || size > m_capacity) {
 		destroy(false);
@@ -816,7 +822,7 @@ void arr::array<type_t>::create(uint64_t size, bool use_pool)
 }
 
 template < typename type_t >
-void arr::array<type_t>::destroy(bool use_pool)
+void cc0::array<type_t>::destroy(bool use_pool)
 {
 	if (!use_pool) {
 		delete [] m_values;
@@ -827,59 +833,59 @@ void arr::array<type_t>::destroy(bool use_pool)
 }
 
 template < typename type_t >
-arr::array<type_t>::operator type_t*( void )
+cc0::array<type_t>::operator type_t*( void )
 {
 	return m_values;
 }
 
 template < typename type_t >
-arr::array<type_t>::operator const type_t*( void ) const
+cc0::array<type_t>::operator const type_t*( void ) const
 {
 	return m_values;
 }
 
 template < typename type_t >
 template < typename type2_t >
-arr::array<type_t>::operator arr::slice<type2_t>( void )
+cc0::array<type_t>::operator cc0::slice<type2_t>( void )
 {
 	return slice<type2_t>(m_values, m_size);
 }
 
 template < typename type_t >
 template < typename type2_t >
-arr::array<type_t>::operator const arr::slice<const type2_t>( void ) const
+cc0::array<type_t>::operator const cc0::slice<const type2_t>( void ) const
 {
 	return slice<const type2_t>(m_values, m_size);
 }
 
 template < typename type_t >
-arr::slice<type_t> arr::array<type_t>::operator()(uint64_t start, uint64_t end)
+cc0::slice<type_t> cc0::array<type_t>::operator()(uint64_t start, uint64_t end)
 {
 	return slice<type_t>(m_values + start, (end - start));
 }
 
 template < typename type_t >
-arr::slice<const type_t> arr::array<type_t>::operator()(uint64_t start, uint64_t end) const
+cc0::slice<const type_t> cc0::array<type_t>::operator()(uint64_t start, uint64_t end) const
 {
 	return slice<const type_t>(m_values + start, (end - start));
 }
 
 template < typename type_t >
-uint64_t arr::array<type_t>::size( void ) const
+uint64_t cc0::array<type_t>::size( void ) const
 {
 	return m_size;
 }
 
 template < typename type_t, typename type2_t >
-arr::slice<type_t> arr::view(type2_t *values, uint64_t start, uint64_t end)
+cc0::slice<type_t> cc0::view(type2_t *values, uint64_t start, uint64_t end)
 {
-	return arr::slice<type_t>(values + start, (end - start));
+	return cc0::slice<type_t>(values + start, (end - start));
 }
 
 template < typename type_t, typename type2_t >
-arr::slice<const type_t> arr::view(const type2_t *values, uint64_t start, uint64_t end)
+cc0::slice<const type_t> cc0::view(const type2_t *values, uint64_t start, uint64_t end)
 {
-	return arr::slice<const type_t>(values + start, (end - start));
+	return cc0::slice<const type_t>(values + start, (end - start));
 }
 
 #endif
