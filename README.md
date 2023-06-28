@@ -1,6 +1,6 @@
 # arr
 ## Copyright
-Copyright Jonathan Karlsson, 2023
+Public domain, 2023
 
 github.com/SirJonthe
 
