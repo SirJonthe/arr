@@ -38,7 +38,7 @@ Create an empty array:
 
 int main()
 {
-	arr::array<int> arr;
+	cc0::array<int> arr;
 	return 0;
 }
 ```
@@ -49,19 +49,7 @@ Create an array with 16 elements:
 
 int main()
 {
-	arr::array<int> arr(16);
-	return 0;
-}
-```
-
-Create an array with 16 elements:
-```
-#include "arr/arr.h"
-
-int main()
-{
-	arr::array<int> arr;
-	arr.create(16);
+	cc0::array<int> arr(16);
 	return 0;
 }
 ```
@@ -73,7 +61,7 @@ Create an array with 16 elements from a C array:
 int main()
 {
 	int tmp[16];
-	arr::array<int> arr(tmp);
+	cc0::array<int> arr(tmp);
 	return 0;
 }
 ```
@@ -84,7 +72,7 @@ Create and initialize an array with 16 elements from a C array:
 
 int main()
 {
-	arr::array<int> arr({1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16});
+	cc0::array<int> arr({1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16});
 	return 0;
 }
 ```
@@ -96,7 +84,7 @@ Create an array with 16 elements from a C pointer:
 int main()
 {
 	int *tmp = new int[16];
-	arr::array<int> arr(tmp, 16);
+	cc0::array<int> arr(tmp, 16);
 	return 0;
 }
 ```
@@ -108,7 +96,7 @@ Create an array with 16 elements:
 
 int main()
 {
-	arr::array<int> arr(16);
+	cc0::array<int> arr(16);
 	return 0;
 }
 ```
@@ -120,7 +108,7 @@ Create an array with 16 elements from a C array:
 int main()
 {
 	int tmp[16];
-	arr::array<int,16> arr(tmp);
+	cc0::array<int,16> arr(tmp);
 	return 0;
 }
 ```
@@ -131,7 +119,7 @@ Create and initialize an array with 16 elements from a C array:
 
 int main()
 {
-	arr::array<int,16> arr({1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16});
+	cc0::array<int,16> arr({1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16});
 	return 0;
 }
 ```
@@ -144,7 +132,7 @@ Accessing data from a variable length array:
 
 int main()
 {
-	arr::array<int> a({1, 2, 3, 4});
+	cc0::array<int> a({1, 2, 3, 4});
 	for (int i = 0; i < a.size() ++i) {
 		std::cout << a[i] << std::endl;
 	}
@@ -159,7 +147,7 @@ Accessing data from a fixed length array:
 
 int main()
 {
-	arr::array<int,4> a({1, 2, 3, 4});
+	cc0::array<int,4> a({1, 2, 3, 4});
 	for (int i = 0; i < a.size() ++i) {
 		std::cout << a[i] << std::endl;
 	}
@@ -174,8 +162,8 @@ Accessing data from a slice:
 
 int main()
 {
-	arr::array<int,4> arr({1, 2, 3, 4});
-	arr::slice<int> a(arr);
+	cc0::array<int,4> arr({1, 2, 3, 4});
+	cc0::slice<int> a(arr);
 	for (int i = 0; i < a.size() ++i) {
 		std::cout << a[i] << std::endl;
 	}
@@ -189,19 +177,19 @@ int main()
 #include <iostream>
 #include "arr/arr.h"
 
-void pass_by_ref(const arr::array<int> &arr);
-void pass_by_ref(const arr::array<int,16> &arr);
+void pass_by_ref(const cc0::array<int> &arr);
+void pass_by_ref(const cc0::array<int,16> &arr);
 
-void pass_by_copy(arr::array<int> &arr);
-void pass_by_copy(arr::array<int,16> &arr);
+void pass_by_copy(cc0::array<int> &arr);
+void pass_by_copy(cc0::array<int,16> &arr);
 
 int main()
 {
-	arr::array<int> a1(32);
+	cc0::array<int> a1(32);
 	pass_by_ref(a1);
 	pass_by_copy(a1);
 
-	arr::array<int,16> a2;
+	cc0::array<int,16> a2;
 	pass_by_ref(a2);
 	pass_by_copy(a2);
 
@@ -218,10 +206,10 @@ void fn(const int *arr, uint64_t size);
 
 int main()
 {
-	arr::array<int> a1(32);
+	cc0::array<int> a1(32);
 	fn(a1, a1.size());
 
-	arr::array<int,16> a2;
+	cc0::array<int,16> a2;
 	f(a2, a2.size());
 
 	return 0;
@@ -233,23 +221,23 @@ The preferred method to pass arrays is via slices, especially if the parameter i
 #include <iostream>
 #include "arr/arr.h"
 
-void pass_slice_ref_constref(const arr::slice<const int> &arr);
-void pass_slice_by_ref(arr::slice<int> &arr);
+void pass_slice_ref_constref(const cc0::slice<const int> &arr);
+void pass_slice_by_ref(cc0::slice<int> &arr);
 
 int main()
 {
 	// pass variable-length array as slice.
-	arr::array<int> a1(32);
+	cc0::array<int> a1(32);
 	pass_slice_by_ref(a1);
 	pass_slice_by_constref(a1);
 
 	// pass fixed-length array as slice
-	arr::array<int,16> a2;
+	cc0::array<int,16> a2;
 	pass_slice_by_ref(a2);
 	pass_slice_by_constref(a2);
 
 	// pass slice of fixed-length array as slice
-	arr::slice<int> a3(a2);
+	cc0::slice<int> a3(a2);
 	pass_slice_by_ref(a3);
 	pass_slice_by_constref(a3);
 
