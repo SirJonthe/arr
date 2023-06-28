@@ -12,7 +12,7 @@ Arrays in `arr` are intended to provide C++ with an array type that can be used 
 
 Arrays in `arr` are still compatible, implicitly and explicitly, with C/C++ arrays and pointers, making them, essentially, a drop-in replacement for built-in C/C++ arrays and pointers.
 
-`arr` also introduces the concept of "slices", sub-arrays that do not own the referencing data themselves, 
+`arr` also introduces the concept of "slices", sub-arrays that do not own the referencing data themselves.
 
 ## Usage
 `arr` provies two essential classes; `array` and `slice`.
