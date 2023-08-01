@@ -231,11 +231,19 @@ namespace cc0
 		template < typename type2_t >
 		operator slice<type2_t>( void );
 
+		/// @brief Converts the array into a slice covering the full span of the array.
+		/// @return The slice.
+		operator slice<type_t>( void );
+
 		/// @brief Converts the array into a read-only slice covering the full span of the array.
 		/// @tparam type2_t The other type.
 		/// @return The slice.
 		template < typename type2_t >
 		operator const slice<const type2_t>( void ) const;
+
+		/// @brief Converts the array into a read-only slice covering the full span of the array.
+		/// @return The slice.
+		operator const slice<const type_t>( void ) const;
 
 		/// @brief Provides a view of the array with the given index bounds.
 		/// @param start The start index of the view (inclusive).
@@ -420,11 +428,19 @@ namespace cc0
 		template < typename type2_t >
 		operator slice<type2_t>( void );
 
+		/// @brief Converts the array into a slice covering the full span of the array.
+		/// @return The slice.
+		operator slice<type_t>( void );
+
 		/// @brief Converts the array into a read-only slice covering the full span of the array.
 		/// @tparam type2_t The other type.
 		/// @return The slice.
 		template < typename type2_t >
 		operator const slice<const type2_t>( void ) const;
+
+		/// @brief Converts the array into a read-only slice covering the full span of the array.
+		/// @return The slice.
+		operator const slice<const type_t>( void ) const;
 
 		/// @brief Provides a view of the array with the given index bounds.
 		/// @param start The start index of the view (inclusive).
@@ -688,10 +704,22 @@ cc0::array<type_t,size_u>::operator cc0::slice<type2_t>( void )
 }
 
 template < typename type_t, uint64_t size_u >
+cc0::array<type_t,size_u>::operator cc0::slice<type_t>( void )
+{
+	return cc0::slice<type_t>(m_values);
+}
+
+template < typename type_t, uint64_t size_u >
 template < typename type2_t >
 cc0::array<type_t,size_u>::operator const cc0::slice<const type2_t>( void ) const
 {
 	return cc0::slice<const type2_t>(m_values);
+}
+
+template < typename type_t, uint64_t size_u >
+cc0::array<type_t,size_u>::operator const cc0::slice<const type_t>( void ) const
+{
+	return cc0::slice<const type_t>(m_values);
 }
 
 template < typename type_t, uint64_t size_u >
@@ -927,26 +955,38 @@ template < typename type_t >
 template < typename type2_t >
 cc0::array<type_t>::operator cc0::slice<type2_t>( void )
 {
-	return slice<type2_t>(m_values, m_size);
+	return cc0::slice<type2_t>(m_values, m_size);
+}
+
+template < typename type_t >
+cc0::array<type_t>::operator cc0::slice<type_t>( void )
+{
+	return cc0::slice<type_t>(m_values, m_size);
 }
 
 template < typename type_t >
 template < typename type2_t >
 cc0::array<type_t>::operator const cc0::slice<const type2_t>( void ) const
 {
-	return slice<const type2_t>(m_values, m_size);
+	return cc0::slice<const type2_t>(m_values, m_size);
+}
+
+template < typename type_t >
+cc0::array<type_t>::operator const cc0::slice<const type_t>( void ) const
+{
+	return cc0::slice<const type_t>(m_values, m_size);
 }
 
 template < typename type_t >
 cc0::slice<type_t> cc0::array<type_t>::operator()(uint64_t start, uint64_t end)
 {
-	return slice<type_t>(m_values + start, (end - start));
+	return cc0::slice<type_t>(m_values + start, (end - start));
 }
 
 template < typename type_t >
 cc0::slice<const type_t> cc0::array<type_t>::operator()(uint64_t start, uint64_t end) const
 {
-	return slice<const type_t>(m_values + start, (end - start));
+	return cc0::slice<const type_t>(m_values + start, (end - start));
 }
 
 template < typename type_t >
