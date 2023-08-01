@@ -282,6 +282,10 @@ namespace cc0
 		template < typename type2_t >
 		array(array<type2_t> &&arr);
 
+		/// @brief Moves data from one array to another.
+		/// @param arr The other array.
+		array(array<type_t> &&arr);
+
 		/// @brief Allocate new memory for the array given a new size.
 		/// @param size The number of elements in the newly created array.
 		explicit array(uint64_t size);
@@ -291,6 +295,10 @@ namespace cc0
 		/// @param arr The array to copy.
 		template < typename type2_t >
 		array(const array<type2_t> &arr);
+
+		/// @brief Copies an array.
+		/// @param arr The array to copy.
+		array(const array<type_t> &arr);
 
 		/// @brief Copies an array of a potentially different type, allowing for implicit conversions e.g. int to float array or derived class pointer to base class pointer.
 		/// @tparam type2_t The other type.
@@ -341,12 +349,22 @@ namespace cc0
 		template < typename type2_t >
 		array &operator=(const array<type2_t> &arr);
 
+		/// @brief Copies an array.
+		/// @param arr The array to copy.
+		/// @return A reference to the object being assigned.
+		array &operator=(const array<type_t> &arr);
+
 		/// @brief Moves data from one array of one type to another.
 		/// @tparam type2_t The other type.
 		/// @param arr The other array.
 		/// @return A reference to the object being assigned.
 		template < typename type2_t >
 		array &operator=(array<type2_t> &&arr);
+
+		/// @brief Moves data from one array to another.
+		/// @param arr The other array.
+		/// @return A reference to the object being assigned.
+		array &operator=(array<type_t> &&arr);
 
 		/// @brief Copies an array of a potentially different type, allowing for implicit conversions e.g. int to float array or derived class pointer to base class pointer.
 		/// @tparam type2_t The other type.
@@ -691,7 +709,15 @@ cc0::array<type_t>::array(const type2_t (&values)[size_u]) : array()
 
 template < typename type_t >
 template < typename type2_t >
-cc0::array<type_t>::array(array<type2_t> &&arr) : m_values(arr), m_size(arr.m_size), m_capacity(arr.m_capacity)
+cc0::array<type_t>::array(cc0::array<type2_t> &&arr) : m_values(arr), m_size(arr.m_size), m_capacity(arr.m_capacity)
+{
+	arr.m_values = nullptr;
+	arr.m_size = 0;
+	arr.m_capacity = 0;
+}
+
+template < typename type_t >
+cc0::array<type_t>::array(cc0::array<type_t> &&arr) : m_values(arr), m_size(arr.m_size), m_capacity(arr.m_capacity)
 {
 	arr.m_values = nullptr;
 	arr.m_size = 0;
@@ -709,6 +735,12 @@ template < typename type2_t >
 cc0::array<type_t>::array(const cc0::array<type2_t> &arr) : array()
 {
 	copy<type2_t>(arr, arr.size(), true);
+}
+
+template < typename type_t >
+cc0::array<type_t>::array(const cc0::array<type_t> &arr) : array()
+{
+	copy<type_t>(arr, arr.size(), true);
 }
 
 template < typename type_t >
@@ -736,14 +768,14 @@ template < typename type_t >
 template < typename type2_t >
 cc0::array<type_t>::array(const type2_t *values, uint64_t size) : array()
 {
-	copy(values, size, true);
+	copy<type2_t>(values, size, true);
 }
 
 template < typename type_t >
 template < typename type2_t, uint64_t size_u >
 cc0::array<type_t>::array(const cc0::values<type2_t,size_u> &vals) : array()
 {
-	copy(vals.v, size_u, true);
+	copy<type2_t>(vals.v, size_u, true);
 }
 
 template < typename type_t >
@@ -761,17 +793,40 @@ cc0::array<type_t> &cc0::array<type_t>::operator=(const cc0::array<type2_t> &arr
 }
 
 template < typename type_t >
+cc0::array<type_t> &cc0::array<type_t>::operator=(const cc0::array<type_t> &arr)
+{
+	copy<type_t>(arr, arr.size(), true);
+	return *this;
+}
+
+template < typename type_t >
 template < typename type2_t >
 cc0::array<type_t> &cc0::array<type_t>::operator=(cc0::array<type2_t> &&arr)
 {
 	if (this != &arr) {
 		destroy(false);
-		m_values = arr.m_values;
-		m_size = arr.m_size;
+		m_values   = arr.m_values;
+		m_size     = arr.m_size;
 		m_capacity = arr.m_capacity;
 
-		arr.m_values = nullptr;
-		arr.m_size = 0;
+		arr.m_values   = nullptr;
+		arr.m_size     = 0;
+		arr.m_capacity = 0;
+	}
+	return *this;
+}
+
+template < typename type_t >
+cc0::array<type_t> &cc0::array<type_t>::operator=(cc0::array<type_t> &&arr)
+{
+	if (this != &arr) {
+		destroy(false);
+		m_values   = arr.m_values;
+		m_size     = arr.m_size;
+		m_capacity = arr.m_capacity;
+
+		arr.m_values   = nullptr;
+		arr.m_size     = 0;
 		arr.m_capacity = 0;
 	}
 	return *this;
