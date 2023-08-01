@@ -96,7 +96,7 @@ Create an array with 16 elements:
 
 int main()
 {
-	cc0::array<int> arr(16);
+	cc0::array<int,16> arr;
 	return 0;
 }
 ```
