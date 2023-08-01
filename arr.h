@@ -31,7 +31,8 @@ namespace cc0
 		operator const type_t*( void ) const;
 	};
 
-	/// @brief A view into an existing array or slice. Slices do not own data - they only provide a view into it, in full or in part. This means that the programmer is responsible for ensuring that the data the slice is viewing is valid when being viewed, e.g. not our of scope or otherwise deleted. Elements in a slice can be manipulated, but the topography of the array itself can not be modified from within a slice even though subsets of the slice can be returned (create slices with smaller range from another slice). While returning superset slices (larger bounds than what the underlying array or slice are defined for) of the underlying array or slice can be done the behavior should be considered undefined.
+	/// @brief A view into an existing array or slice. Slices do not own data - they only provide a view into it, in full or in part. This means that the programmer is responsible for ensuring that the data the slice is viewing is valid when being viewed, e.g. not our of scope or otherwise deleted. Elements in a slice can be manipulated, but the topography of the array itself can not be modified from within a slice even though subsets of the slice can be returned (create slices with smaller range from another slice).
+	/// @warning Returning superset slices (larger bounds than what the underlying array or slice are defined for) should be considered undefined behavior.
 	/// @tparam type_t The type of the array.
 	template < typename type_t >
 	class slice
@@ -127,7 +128,7 @@ namespace cc0
 
 		/// @brief Implicitly converts the slice into a readonly slice.
 		/// @tparam type2_t The other type.
-		/// @return The const verion of the slice. 
+		/// @return The const version of the slice. 
 		template < typename type2_t >
 		operator slice<const type2_t>( void ) const;
 
@@ -461,6 +462,24 @@ namespace cc0
 	/// @return A slice of the input array.
 	template < typename type_t, typename type2_t >
 	slice<const type_t> view(const type2_t *values, uint64_t start, uint64_t end);
+
+	/// @brief Selects a part of the input array and returns a slice within the specified
+	/// @tparam type_t The type of the returned slice.
+	/// @tparam type2_t The type of the input array.
+	/// @param values The input array.
+	/// @param count The number of elements in the array (or part thereof).
+	/// @return A slice of the input array.
+	template < typename type_t, typename type2_t >
+	slice<type_t> view(type2_t *values, uint64_t count);
+
+	/// @brief Selects a part of the input array and returns a slice within the specified
+	/// @tparam type_t The type of the returned slice.
+	/// @tparam type2_t The type of the input array.
+	/// @param values The input array.
+	/// @param count The number of elements in the array (or part thereof).
+	/// @return A slice of the input array.
+	template < typename type_t, typename type2_t >
+	slice<const type_t> view(const type2_t *values, uint64_t count);
 }
 
 template < typename type_t, uint64_t size_u >
@@ -941,6 +960,18 @@ template < typename type_t, typename type2_t >
 cc0::slice<const type_t> cc0::view(const type2_t *values, uint64_t start, uint64_t end)
 {
 	return cc0::slice<const type_t>(values + start, (end - start));
+}
+
+template < typename type_t, typename type2_t >
+cc0::slice<type_t> cc0::view(type2_t *values, uint64_t count)
+{
+	return cc0::slice<type_t>(values, count);
+}
+
+template < typename type_t, typename type2_t >
+cc0::slice<const type_t> cc0::view(const type2_t *values, uint64_t count)
+{
+	return cc0::slice<const type_t>(values, count);
 }
 
 #endif
