@@ -480,6 +480,13 @@ namespace cc0
 	/// @return A slice of the input array.
 	template < typename type_t, typename type2_t >
 	slice<const type_t> view(const type2_t *values, uint64_t count);
+
+	/// @brief Writes a given value to the entirety of the slice.
+	/// @tparam type_t 
+	/// @param slice The slice to write the value to.
+	/// @param value The value to write to the slice.
+	template < typename type_t >
+	void fill(slice<type_t> &slice, const type_t &value);
 }
 
 template < typename type_t, uint64_t size_u >
@@ -822,32 +829,30 @@ template < typename type_t >
 template < typename type2_t >
 cc0::array<type_t> &cc0::array<type_t>::operator=(cc0::array<type2_t> &&arr)
 {
-	if (this != &arr) {
+	if (m_values != arr.m_values) {
 		destroy(false);
-		m_values   = arr.m_values;
-		m_size     = arr.m_size;
-		m_capacity = arr.m_capacity;
-
-		arr.m_values   = nullptr;
-		arr.m_size     = 0;
-		arr.m_capacity = 0;
 	}
+	m_values       = arr.m_values;
+	m_size         = arr.m_size;
+	m_capacity     = arr.m_capacity;
+	arr.m_values   = nullptr;
+	arr.m_size     = 0;
+	arr.m_capacity = 0;
 	return *this;
 }
 
 template < typename type_t >
 cc0::array<type_t> &cc0::array<type_t>::operator=(cc0::array<type_t> &&arr)
 {
-	if (this != &arr) {
+	if (m_values != arr.m_values) {
 		destroy(false);
-		m_values   = arr.m_values;
-		m_size     = arr.m_size;
-		m_capacity = arr.m_capacity;
-
-		arr.m_values   = nullptr;
-		arr.m_size     = 0;
-		arr.m_capacity = 0;
 	}
+	m_values       = arr.m_values;
+	m_size         = arr.m_size;
+	m_capacity     = arr.m_capacity;
+	arr.m_values   = nullptr;
+	arr.m_size     = 0;
+	arr.m_capacity = 0;
 	return *this;
 }
 
@@ -972,6 +977,14 @@ template < typename type_t, typename type2_t >
 cc0::slice<const type_t> cc0::view(const type2_t *values, uint64_t count)
 {
 	return cc0::slice<const type_t>(values, count);
+}
+
+template < typename type_t >
+void cc0::fill(cc0::slice<type_t> &slice, const type_t &value)
+{
+	for (uint64_t i = 0; i < slice.size(); ++i) {
+		slice[i] = value;
+	}
 }
 
 #endif
