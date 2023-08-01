@@ -502,7 +502,7 @@ namespace cc0
 	/// @param slice The slice to write the value to.
 	/// @param value The value to write to the slice.
 	template < typename type_t >
-	void fill(slice<type_t> &slice, const type_t &value);
+	void fill(slice<type_t> slice, const type_t &value);
 }
 
 template < typename type_t, uint64_t size_u >
@@ -1020,7 +1020,7 @@ cc0::slice<const type_t> cc0::view(const type2_t *values, uint64_t count)
 }
 
 template < typename type_t >
-void cc0::fill(cc0::slice<type_t> &slice, const type_t &value)
+void cc0::fill(cc0::slice<type_t> slice, const type_t &value)
 {
 	for (uint64_t i = 0; i < slice.size(); ++i) {
 		slice[i] = value;
