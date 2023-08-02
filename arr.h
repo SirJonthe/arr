@@ -53,23 +53,10 @@ namespace cc0
 
 		/// @brief Copies a reference to another array of a different type in order to allow for implicit convertion between array types, e.g. float to int array, or derived class pointer to base class pointer.
 		/// @tparam type2_t The other type.
-		/// @param arr The array to copy the reference of.
-		template < typename type2_t >
-		slice(const slice<const type2_t> &arr);
-
-		/// @brief Copies a reference to another array of a different type in order to allow for implicit convertion between array types, e.g. float to int array, or derived class pointer to base class pointer.
-		/// @tparam type2_t The other type.
 		/// @param values The array to reference.
 		/// @param size The size of the array to reference.
 		template < typename type2_t >
 		slice(type2_t *values, uint64_t size);
-
-		/// @brief Copies a reference to another array of a different type in order to allow for implicit convertion between array types, e.g. float to int array, or derived class pointer to base class pointer.
-		/// @tparam type2_t The other type.
-		/// @param values The array to reference.
-		/// @param size The size of the array to reference.
-		template < typename type2_t >
-		slice(const type2_t *values, uint64_t size);
 
 		/// @brief Copies a reference to another array of a different type in order to allow for implicit convertion between array types, e.g. float to int array, or derived class pointer to base class pointer.
 		/// @tparam type2_t The other type.
@@ -80,24 +67,10 @@ namespace cc0
 
 		/// @brief Copies a reference to another array of a different type in order to allow for implicit convertion between array types, e.g. float to int array, or derived class pointer to base class pointer.
 		/// @tparam type2_t The other type.
-		/// @tparam size_u The size of the array to reference.
-		/// @param values The array to reference.
-		template < typename type2_t, uint64_t size_u >
-		slice(const type2_t (&values)[size_u]);
-
-		/// @brief Copies a reference to another array of a different type in order to allow for implicit convertion between array types, e.g. float to int array, or derived class pointer to base class pointer.
-		/// @tparam type2_t The other type.
 		/// @param arr The array to copy the reference of.
 		/// @return A reference to the object being assigned.
 		template < typename type2_t >
 		slice &operator=(const slice<type2_t> &arr);
-
-		/// @brief Copies a reference to another array of a different type in order to allow for implicit convertion between array types, e.g. float to int array, or derived class pointer to base class pointer.
-		/// @tparam type2_t The other type.
-		/// @param arr The array to copy the reference of.
-		/// @return A reference to the object being assigned.
-		template < typename type2_t >
-		slice &operator=(const slice<const type2_t> &arr);
 
 		/// @brief Copies a reference to another array of a different type in order to allow for implicit convertion between array types, e.g. float to int array, or derived class pointer to base class pointer.
 		/// @tparam type2_t The other type.
@@ -106,14 +79,6 @@ namespace cc0
 		/// @return A reference to the object being assigned.
 		template < typename type2_t, uint64_t size_u >
 		slice &operator=(type2_t (&values)[size_u]);
-
-		/// @brief Copies a reference to another array of a different type in order to allow for implicit convertion between array types, e.g. float to int array, or derived class pointer to base class pointer.
-		/// @tparam type2_t The other type.
-		/// @tparam size_u The size of the array to reference.
-		/// @param values The array to copy the reference of.
-		/// @return A reference to the object being assigned.
-		template < typename type2_t, uint64_t size_u >
-		slice &operator=(const type2_t (&values)[size_u]);
 
 		/// @brief Releases the reference to an existing array.
 		void release( void );
@@ -229,33 +194,33 @@ namespace cc0
 		/// @tparam type2_t The other type.
 		/// @return The slice.
 		template < typename type2_t >
-		operator slice<type2_t>( void );
+		operator cc0::slice<type2_t>( void );
 
 		/// @brief Converts the array into a slice covering the full span of the array.
 		/// @return The slice.
-		operator slice<type_t>( void );
+		operator cc0::slice<type_t>( void );
 
 		/// @brief Converts the array into a read-only slice covering the full span of the array.
 		/// @tparam type2_t The other type.
 		/// @return The slice.
 		template < typename type2_t >
-		operator const slice<const type2_t>( void ) const;
+		operator const cc0::slice<const type2_t>( void ) const;
 
 		/// @brief Converts the array into a read-only slice covering the full span of the array.
 		/// @return The slice.
-		operator const slice<const type_t>( void ) const;
+		operator const cc0::slice<const type_t>( void ) const;
 
 		/// @brief Provides a view of the array with the given index bounds.
 		/// @param start The start index of the view (inclusive).
 		/// @param end The end index of the view (non-inclusive).
 		/// @return The slice view of the array.
-		slice<type_t> operator()(uint64_t start, uint64_t end);
+		cc0::slice<type_t> operator()(uint64_t start, uint64_t end);
 
 		/// @brief Provides a view of the array with the given index bounds.
 		/// @param start The start index of the view (inclusive).
 		/// @param end The end index of the view (non-inclusive).
 		/// @return The slice view of the array.
-		slice<const type_t> operator()(uint64_t start, uint64_t end) const;
+		cc0::slice<const type_t> operator()(uint64_t start, uint64_t end) const;
 
 		/// @brief Gets the size of the array.
 		/// @return The number of elements in the array.
@@ -319,13 +284,13 @@ namespace cc0
 		/// @tparam type2_t The other type.
 		/// @param arr The array slice to copy.
 		template < typename type2_t >
-		array(const slice<type2_t> &arr);
+		array(const cc0::slice<type2_t> &arr);
 
 		/// @brief Copies a slice of an array of a potentially different type, allowing for implicit conversions e.g. int to float array or derived class pointer to base class pointer.
 		/// @tparam type2_t The other type.
 		/// @param arr The array slice to copy.
 		template < typename type2_t >
-		array(const slice<const type2_t> &arr);
+		array(const cc0::slice<const type2_t> &arr);
 
 		/// @brief Copies an array of a potentially different type, allowing for implicit conversions e.g. int to float array or derived class pointer to base class pointer.
 		/// @tparam type2_t The other type.
@@ -387,7 +352,7 @@ namespace cc0
 		/// @param arr The array slice to copy.
 		/// @return A reference to the object being assigned.
 		template < typename type2_t >
-		array &operator=(const slice<const type2_t> &arr);
+		array &operator=(const cc0::slice<const type2_t> &arr);
 
 		/// @brief Copies an array of a potentially different type, allowing for implicit conversions e.g. int to float array or derived class pointer to base class pointer.
 		/// @tparam type2_t The other type.
@@ -426,33 +391,33 @@ namespace cc0
 		/// @tparam type2_t The other type.
 		/// @return The slice.
 		template < typename type2_t >
-		operator slice<type2_t>( void );
+		operator cc0::slice<type2_t>( void );
 
 		/// @brief Converts the array into a slice covering the full span of the array.
 		/// @return The slice.
-		operator slice<type_t>( void );
+		operator cc0::slice<type_t>( void );
 
 		/// @brief Converts the array into a read-only slice covering the full span of the array.
 		/// @tparam type2_t The other type.
 		/// @return The slice.
 		template < typename type2_t >
-		operator const slice<const type2_t>( void ) const;
+		operator const cc0::slice<const type2_t>( void ) const;
 
 		/// @brief Converts the array into a read-only slice covering the full span of the array.
 		/// @return The slice.
-		operator const slice<const type_t>( void ) const;
+		operator const cc0::slice<const type_t>( void ) const;
 
 		/// @brief Provides a view of the array with the given index bounds.
 		/// @param start The start index of the view (inclusive).
 		/// @param end The end index of the view (non-inclusive).
 		/// @return The slice view of the array.
-		slice<type_t> operator()(uint64_t start, uint64_t end);
+		cc0::slice<type_t> operator()(uint64_t start, uint64_t end);
 
 		/// @brief Provides a view of the array with the given index bounds.
 		/// @param start The start index of the view (inclusive).
 		/// @param end The end index of the view (non-inclusive).
 		/// @return The slice view of the array.
-		slice<const type_t> operator()(uint64_t start, uint64_t end) const;
+		cc0::slice<const type_t> operator()(uint64_t start, uint64_t end) const;
 
 		/// @brief Gets the size of the array.
 		/// @return The number of elements in the array.
@@ -467,7 +432,7 @@ namespace cc0
 	/// @param end The last index (non-inclusive) of the view into the input array.
 	/// @return A slice of the input array.
 	template < typename type_t, typename type2_t >
-	slice<type_t> view(type2_t *values, uint64_t start, uint64_t end);
+	cc0::slice<type_t> view(type2_t *values, uint64_t start, uint64_t end);
 
 	/// @brief Selects a part of the input array and returns a slice within the specified
 	/// @tparam type_t The type of the returned slice.
@@ -477,7 +442,7 @@ namespace cc0
 	/// @param end The last index (non-inclusive) of the view into the input array.
 	/// @return A slice of the input array.
 	template < typename type_t, typename type2_t >
-	slice<const type_t> view(const type2_t *values, uint64_t start, uint64_t end);
+	cc0::slice<const type_t> view(const type2_t *values, uint64_t start, uint64_t end);
 
 	/// @brief Selects a part of the input array and returns a slice within the specified
 	/// @tparam type_t The type of the returned slice.
@@ -486,7 +451,7 @@ namespace cc0
 	/// @param count The number of elements in the array (or part thereof).
 	/// @return A slice of the input array.
 	template < typename type_t, typename type2_t >
-	slice<type_t> view(type2_t *values, uint64_t count);
+	cc0::slice<type_t> view(type2_t *values, uint64_t count);
 
 	/// @brief Selects a part of the input array and returns a slice within the specified
 	/// @tparam type_t The type of the returned slice.
@@ -495,14 +460,14 @@ namespace cc0
 	/// @param count The number of elements in the array (or part thereof).
 	/// @return A slice of the input array.
 	template < typename type_t, typename type2_t >
-	slice<const type_t> view(const type2_t *values, uint64_t count);
+	cc0::slice<const type_t> view(const type2_t *values, uint64_t count);
 
 	/// @brief Writes a given value to the entirety of the slice.
 	/// @tparam type_t 
-	/// @param slice The slice to write the value to.
+	/// @param dst The slice to write the value to.
 	/// @param value The value to write to the slice.
 	template < typename type_t >
-	void fill(slice<type_t> slice, const type_t &value);
+	void fill(cc0::slice<type_t> dst, const type_t &value);
 }
 
 template < typename type_t, uint64_t size_u >
@@ -528,17 +493,7 @@ cc0::slice<type_t>::slice(const cc0::slice<type2_t> &arr) : m_values(arr), m_siz
 
 template < typename type_t >
 template < typename type2_t >
-cc0::slice<type_t>::slice(const cc0::slice<const type2_t> &arr) : m_values(arr), m_size(arr.size())
-{}
-
-template < typename type_t >
-template < typename type2_t >
 cc0::slice<type_t>::slice(type2_t *values, uint64_t size) : m_values(values), m_size(size)
-{}
-
-template < typename type_t >
-template < typename type2_t >
-cc0::slice<type_t>::slice(const type2_t *values, uint64_t size) : m_values(values), m_size(size)
 {}
 
 template < typename type_t >
@@ -547,22 +502,8 @@ cc0::slice<type_t>::slice(type2_t (&values)[size_u]) : m_values(values), m_size(
 {}
 
 template < typename type_t >
-template < typename type2_t, uint64_t size_u >
-cc0::slice<type_t>::slice(const type2_t (&values)[size_u]) : m_values(values), m_size(size_u)
-{}
-
-template < typename type_t >
 template < typename type2_t >
-cc0::slice<type_t> &cc0::slice<type_t>::operator=(const slice<type2_t> &arr)
-{
-	m_values = arr.m_values;
-	m_size = arr.m_size;
-	return *this;
-}
-
-template < typename type_t >
-template < typename type2_t >
-cc0::slice<type_t> &cc0::slice<type_t>::operator=(const slice<const type2_t> &arr)
+cc0::slice<type_t> &cc0::slice<type_t>::operator=(const cc0::slice<type2_t> &arr)
 {
 	m_values = arr.m_values;
 	m_size = arr.m_size;
@@ -572,15 +513,6 @@ cc0::slice<type_t> &cc0::slice<type_t>::operator=(const slice<const type2_t> &ar
 template < typename type_t >
 template < typename type2_t, uint64_t size_u >
 cc0::slice<type_t> &cc0::slice<type_t>::operator=(type2_t (&values)[size_u])
-{
-	m_values = values;
-	m_size = size_u;
-	return *this;
-}
-
-template < typename type_t >
-template < typename type2_t, uint64_t size_u >
-cc0::slice<type_t> &cc0::slice<type_t>::operator=(const type2_t (&values)[size_u])
 {
 	m_values = values;
 	m_size = size_u;
@@ -609,13 +541,13 @@ cc0::slice<type_t>::operator const type_t*( void ) const
 template < typename type_t >
 cc0::slice<type_t> cc0::slice<type_t>::operator()(uint64_t start, uint64_t end)
 {
-	return slice<type_t>(m_values + start, (end - start));
+	return cc0::slice<type_t>(m_values + start, (end - start));
 }
 
 template < typename type_t >
 cc0::slice<const type_t> cc0::slice<type_t>::operator()(uint64_t start, uint64_t end) const
 {
-	return slice<const type_t>(m_values + start, (end - start));
+	return cc0::slice<const type_t>(m_values + start, (end - start));
 }
 
 template < typename type_t >
@@ -626,8 +558,8 @@ uint64_t cc0::slice<type_t>::size( void ) const
 
 template < typename type_t >
 template < typename type2_t >
-cc0::slice<type_t>::operator slice<const type2_t>( void ) const {
-	return slice<const type2_t>(m_values, m_size);
+cc0::slice<type_t>::operator cc0::slice<const type2_t>( void ) const {
+	return cc0::slice<const type2_t>(m_values, m_size);
 }
 
 template < typename type_t, uint64_t size_u >
@@ -725,13 +657,13 @@ cc0::array<type_t,size_u>::operator const cc0::slice<const type_t>( void ) const
 template < typename type_t, uint64_t size_u >
 cc0::slice<type_t> cc0::array<type_t,size_u>::operator()(uint64_t start, uint64_t end)
 {
-	return slice<type_t>(m_values + start, (end - start));
+	return cc0::slice<type_t>(m_values + start, (end - start));
 }
 
 template < typename type_t, uint64_t size_u >
 cc0::slice<const type_t> cc0::array<type_t,size_u>::operator()(uint64_t start, uint64_t end) const
 {
-	return slice<const type_t>(m_values + start, (end - start));
+	return cc0::slice<const type_t>(m_values + start, (end - start));
 }
 
 template < typename type_t, uint64_t size_u >
@@ -1020,10 +952,10 @@ cc0::slice<const type_t> cc0::view(const type2_t *values, uint64_t count)
 }
 
 template < typename type_t >
-void cc0::fill(cc0::slice<type_t> slice, const type_t &value)
+void cc0::fill(cc0::slice<type_t> dst, const type_t &value)
 {
-	for (uint64_t i = 0; i < slice.size(); ++i) {
-		slice[i] = value;
+	for (uint64_t i = 0; i < dst.size(); ++i) {
+		dst[i] = value;
 	}
 }
 
