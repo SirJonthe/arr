@@ -1,4 +1,5 @@
-/// @file
+/// @file arr.h
+/// @brief Contains a minimalist library that introduces an array type that encapsulates built-in arrays and pointers.
 /// @author github.com/SirJonthe
 /// @date 2023
 /// @copyright Public domain.
@@ -32,8 +33,8 @@ namespace cc0
 	};
 
 	/// @brief A view into an existing array or slice. Slices do not own data - they only provide a view into it, in full or in part. This means that the programmer is responsible for ensuring that the data the slice is viewing is valid when being viewed, e.g. not our of scope or otherwise deleted. Elements in a slice can be manipulated, but the topography of the array itself can not be modified from within a slice even though subsets of the slice can be returned (create slices with smaller range from another slice).
-	/// @warning Returning superset slices (larger bounds than what the underlying array or slice are defined for) should be considered undefined behavior.
 	/// @tparam type_t The type of the array.
+	/// @warning Returning superset slices (larger bounds than what the underlying array or slice are defined for) should be considered undefined behavior.
 	template < typename type_t >
 	class slice
 	{
